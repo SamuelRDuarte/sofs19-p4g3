@@ -14,7 +14,13 @@ namespace sofs19
         soProbe(607, "%s(%u, %u, %u)\n", __FUNCTION__, ntotal, itotal, nbref);
 
         /* change the following line by your code */
-        binResetFreeDataBlocks(ntotal, itotal, nbref);
+
+        char block[RPB]={0};
+        int first= (itotal/IPB)+2+nbref;
+
+        for(int i=first;i<ntotal;i++){
+            soWriteRawBlocK(i,block)
+        }
     }
 };
 
