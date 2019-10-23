@@ -69,7 +69,6 @@ namespace sofs19
            sb.tail_cache.ref[i] = NullReference;
        }
        
-       
 
         soWriteRawBlock(0,&sb);
 

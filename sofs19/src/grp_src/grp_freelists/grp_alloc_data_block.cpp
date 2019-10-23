@@ -24,7 +24,24 @@ namespace sofs19
         soProbe(441, "%s()\n", __FUNCTION__);
 
         /* change the following line by your code */
-        return binAllocDataBlock();
+        //return binAllocDataBlock();
+
+        SOSuperBlock *sb = soGetSuperBlockPointer();
+
+        if(sb->dz_free == 0)
+            throw SOException(ENOSPC,__FUNCTION__);
+        
+        if(sb->head_cache.idx == HEAD_CACHE_SIZE)
+            soReplenishHeadCache();
+
+        uint32_t index = sb->head_cache.idx;
+        uint32_t bloco = sb->head_cache.ref[index];
+        sb->head_cache.ref[index] == NullReference;
+        sb->head_cache.idx +=1;
+        sb->dz_free -=1;
+        soSaveSuperBlock();
+        return bloco;
+        
     }
 };
 
