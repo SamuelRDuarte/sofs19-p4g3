@@ -1,8 +1,15 @@
-#include "../../../include/grp/grp_mksofs.h"
+/*#include "../../../include/grp/grp_mksofs.h"
 
 #include "../../../include/rawdisk.h"
 #include "../../../include/core.h"
 #include "../../../include/bin/bin_mksofs.h"
+*/
+
+#include "grp_mksofs.h"
+
+#include "rawdisk.h"
+#include "core.h"
+#include "bin_mksofs.h"
 
 #include <string.h>
 #include <inttypes.h>
