@@ -3,7 +3,8 @@
  *  \authur Artur Pereira - 2016-2019
  */
 
-#include "../../../include/grp/grp_freelists.h"
+//#include "../../../include/grp/grp_freelists.h"
+#include "grp_freelists.h"
 
 #include <stdio.h>
 #include <errno.h>
@@ -12,10 +13,14 @@
 #include <unistd.h>
 #include <sys/types.h>
 
-#include "../../../include/core.h"
-#include "../../../include/dal.h"
-#include "../../../include/freelists.h"
-#include "../../../include/bin/bin_freelists.h"
+//#include "../../../include/core.h"
+//#include "../../../include/dal.h"
+//#include "../../../include/freelists.h"
+//#include "../../../include/bin/bin_freelists.h"
+#include "core.h"
+#include "dal.h"
+#include "freelists.h"
+#include "bin_freelists.h"
 
 namespace sofs19
 {
