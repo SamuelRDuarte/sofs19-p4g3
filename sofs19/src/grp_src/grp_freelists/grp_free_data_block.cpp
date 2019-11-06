@@ -24,7 +24,18 @@ namespace sofs19
         soProbe(442, "%s(%u)\n", __FUNCTION__, bn);
 
         /* change the following line by your code */
-        binFreeDataBlock(bn);
+        //binFreeDataBlock(bn);
+
+        SOSuperBlock * sb= soGetSuperBlockPointer();
+
+        if(sb->tail_cache.idx == TAIL_CACHE_SIZE-1){
+            soDepleteTailCache();
+        }
+
+        else{
+            char block[RPB]={0};                //RPB ou BLockSize???
+            soWriteDataBlock(bn,block);
+        }
     }
 };
 
