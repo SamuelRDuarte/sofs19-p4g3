@@ -23,28 +23,28 @@ namespace sofs19
             throw SOException(ENAMETOOLONG, __FUNCTION__);
         }
 
-        SOInode* pi = soGetInodePointer(pih);
-        if(!S_ISDIR(pi->mode)){
+        SOInode* p = soGetInodePointer(pih);
+        if(!S_ISDIR(p->mode)){
             throw SOException(ENOTDIR,__FUNCTION__);
         }
 
-        int emptySlot = -1;
-        int emptySlotBlockIndex = -1;
-        SODirEntry emptySlotBlock[DPB];
+        int rowVazia = -1;
+        int BIVazia = -1; //Block Index
+        SODirEntry rowBlockVazia[DPB];
 
 
         SODirEntry d[DPB];
         uint32_t i = 0;
-        for (; i < (pi->size / BlockSize); i++ ) {
+        for (; i < (p->size / BlockSize); i++ ) {
 
             soReadFileBlock(pih, i, d);
 
             uint32_t j = 0;
             for (; j < DPB; j++) {
-                if (emptySlot < 0 && d[j].name[0] == '\0') {
-                    soReadFileBlock(pih, i, emptySlotBlock);
-                    emptySlotBlockIndex = i;
-                    emptySlot = j;
+                if (rowVazia < 0 && d[j].name[0] == '\0') {
+                    soReadFileBlock(pih, i, rowBlockVazia);
+                    BIVazia = i;
+                    rowVazia = j;
                 }
                 
                 //Error EEXIST should be thrown if name already exists 
@@ -54,11 +54,11 @@ namespace sofs19
             }
         }
 
-        if (emptySlot >= 0) {
+        if (rowVazia >= 0) {
 
-            memcpy(emptySlotBlock[emptySlot].name, name, SOFS19_MAX_NAME+1);
-            memcpy(&emptySlotBlock[emptySlot].in, &cin, sizeof(uint32_t));
-            soWriteFileBlock(pih, emptySlotBlockIndex, emptySlotBlock);
+            memcpy(rowBlockVazia[rowVazia].name, name, SOFS19_MAX_NAME+1);
+            memcpy(&rowBlockVazia[rowVazia].in, &cin, sizeof(uint32_t));
+            soWriteFileBlock(pih, BIVazia, rowBlockVazia);
         }			
         else {
 
@@ -66,16 +66,16 @@ namespace sofs19
                 soAllocFileBlock(pih, i);
             }
 
-            SODirEntry dir[DPB];
-            memset(dir,0,BlockSize);
+            SODirEntry dirEntry[DPB];
+            memset(dirEntry,0,BlockSize);
             for(uint32_t i = 0; i < DPB; i++){
-                dir[i].in = NullReference;
+                dirEntry[i].in = NullReference;
             }
-            memcpy(dir[0].name, name, SOFS19_MAX_NAME+1);
-            dir[0].in = cin;
-            pi->size += BlockSize;
+            memcpy(dirEntry[0].name, name, SOFS19_MAX_NAME+1);
+            dirEntry[0].in = cin;
+            p->size += BlockSize;
 
-            soWriteFileBlock(pih, i, dir);
+            soWriteFileBlock(pih, i, dirEntry);
         }
     }
 };
