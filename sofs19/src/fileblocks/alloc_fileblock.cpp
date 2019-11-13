@@ -12,6 +12,9 @@ namespace sofs19
 {
     uint32_t soAllocFileBlock(int ih, uint32_t fbn)
     {
+
+
+        
         if (soBinSelected(302))
             return binAllocFileBlock(ih, fbn);
         else
