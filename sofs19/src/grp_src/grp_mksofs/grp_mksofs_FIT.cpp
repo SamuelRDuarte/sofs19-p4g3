@@ -21,7 +21,7 @@ namespace sofs19
         SOInode inode[IPB];
 
         for (uint32_t blkID= 1; blkID < nBlocks+1; ++blkID) {
-            for (int i = 0; i < IPB; ++i) {
+            for (uint32_t i = 0; i < IPB; ++i) {
                 inode[i].mode = INODE_FREE;
                 inode[i].owner = 0;
                 inode[i].group = 0;
@@ -53,10 +53,7 @@ namespace sofs19
                         inode[0].atime = inode[0].ctime = inode[0].mtime = 0;
 
                     inode[0].d[0] = 0;
-
                 }
-
-
             }
             soWriteRawBlock(blkID, &inode);
         }
