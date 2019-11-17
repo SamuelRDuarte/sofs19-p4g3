@@ -1,18 +1,18 @@
-#include "../../../include/direntries.h"
-//#include "direntries.h"
+//#include "../../../include/direntries.h"
+#include "direntries.h"
 
-
+/*
 #include "../../../include/core.h"
 #include "../../../include/dal.h"
 #include "../../../include/fileblocks.h"
 #include "../../../include/bin/bin_direntries.h"
+*/
 
-/*
 #include "core.h"
 #include "dal.h"
 #include "fileblocks.h"
 #include "bin_direntries.h"
-*/
+
 
 #include <errno.h>
 #include <string.h>
