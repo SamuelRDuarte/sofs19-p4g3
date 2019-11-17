@@ -22,7 +22,7 @@ void grpRenameDirEntry(int pih, const char *name, const char *newName)
 
     if (!strcmp(newName, ""))
     {
-            throw SOException(EINVAL,__FUNCTION__));
+            throw SOException(EINVAL,__FUNCTION__);
     }
 
     if (strlen(newName) > SOFS19_MAX_NAME)
@@ -32,14 +32,14 @@ void grpRenameDirEntry(int pih, const char *name, const char *newName)
 
     if (!S_ISDIR(ip->mode))
     {
-        throw SOException(ENOTDIR, __FUCTION__);
+        throw SOException(ENOTDIR, __FUNCTION__);
     }
 
     int toName = -1;
     int toNamei = -1;
 
-    SODirEntry rblock[DirentriesPerBlock];
-    SODirEntry d[DirentriesPerBlock];
+    SODirEntry rblock[DPB];
+    SODirEntry d[DPB];
 
     uint32_t i = 0;
     for (; i < (ip->size / BlockSize); i++){
@@ -47,7 +47,7 @@ void grpRenameDirEntry(int pih, const char *name, const char *newName)
         soReadFileBlock(pih, i, d);
 
         uint32_t j = 0;
-        for (; j < DirentriesPerBlock; j++)
+        for (; j < DPB; j++)
         {
             if (toName < 0 && strcmp(d[j].name, name) == 0)
             {
@@ -66,7 +66,7 @@ void grpRenameDirEntry(int pih, const char *name, const char *newName)
     if (toName >= 0)
     {
 
-        memcpy(rblock[toName].name, name, SOFS19_MAX_NAME);
+        memcpy(rblock[toName].name, newName, SOFS19_MAX_NAME);
         soWriteFileBlock(pih, toNamei, rblock);
     }
 
