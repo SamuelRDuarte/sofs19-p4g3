@@ -32,10 +32,13 @@ namespace sofs19
             soDepleteTailCache();
         }
 
-        else{
-            char block[RPB]={0};                //RPB ou BLockSize???
-            soWriteDataBlock(bn,block);
-        }
+        uint32_t index = sb->tail_cache.idx;
+        sb->tail_cache.ref[index] = bn;
+        sb->tail_cache.idx +=1;
+        sb->dz_free +=1;
+
+        soSaveSuperBlock();
+
     }
 };
 
