@@ -36,7 +36,7 @@ namespace sofs19
 
         uint32_t index = sb->head_cache.idx;
         uint32_t bloco = sb->head_cache.ref[index];
-        sb->head_cache.ref[index] == NullReference;
+        sb->head_cache.ref[index] = NullReference;
         sb->head_cache.idx +=1;
         sb->dz_free -=1;
         soSaveSuperBlock();
