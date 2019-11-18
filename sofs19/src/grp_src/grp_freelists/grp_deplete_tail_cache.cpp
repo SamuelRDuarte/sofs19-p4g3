@@ -26,6 +26,11 @@ namespace sofs19
         /* change the following line by your code */
         SOSuperBlock *sbp = soGetSuperBlockPointer();
 
+        if(sbp -> dz_free == 0)
+            throw SOException(ENOSPC, __FUNCTION__);
+        if (sbp -> tail_cache.idx != TAIL_CACHE_SIZE)
+            return;
+
         uint32_t block = sbp -> tail_idx / RPB ;
         uint32_t block_used_refs = sbp -> tail_idx % RPB;
         uint32_t *bp;
