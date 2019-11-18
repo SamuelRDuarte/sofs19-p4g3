@@ -19,7 +19,7 @@ namespace sofs19
 
         uint32_t  nBlocks = itotal/IPB;
         SOInode inode[IPB];
-
+        int next = 0;
         for (uint32_t blkID= 1; blkID < nBlocks+1; ++blkID) {
             for (uint32_t i = 0; i < IPB; ++i) {
                 inode[i].mode = INODE_FREE;
@@ -28,6 +28,7 @@ namespace sofs19
                 inode[i].size = 0;
                 inode[i].blkcnt = 0;
                 inode[i].lnkcnt = 0;
+                inode[i].next = ++next;
 
                 for (int j = 0; j < N_DIRECT; ++j) {
                     inode[i].d[j] = NullReference;
@@ -46,6 +47,7 @@ namespace sofs19
                     inode[0].size = BlockSize;
                     inode[0].blkcnt = 1;
                     inode[0].lnkcnt = 2;
+                    inode[0].next = 0;
 
                     if(set_date)
                         inode[0].atime = inode[0].ctime = inode[0].mtime = time(NULL);
@@ -57,7 +59,6 @@ namespace sofs19
             }
             soWriteRawBlock(blkID, &inode);
         }
-
     }
 };
 
