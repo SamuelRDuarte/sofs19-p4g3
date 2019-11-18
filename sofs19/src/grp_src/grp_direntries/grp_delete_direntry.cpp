@@ -19,6 +19,12 @@ namespace sofs19
         SOInode* ip = soGetInodePointer(pih);
         SODirEntry ref[DPB];
 
+    if (!strcmp(name, ""))
+            throw SOException(EINVAL,__FUNCTION__);
+
+    if (strlen(name) > SOFS19_MAX_NAME)
+        throw SOException(ENAMETOOLONG, __FUNCTION__);
+
         uint32_t numBlocks = (ip->size) / BlockSize;
         uint32_t result;
 
