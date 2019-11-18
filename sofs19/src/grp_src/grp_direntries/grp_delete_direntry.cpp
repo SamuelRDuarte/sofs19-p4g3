@@ -19,7 +19,7 @@ namespace sofs19
         SOInode* ip = soGetInodePointer(pih);
         SODirEntry ref[DPB];
 
-        uint32_t numBlocks = (ip->size) / BlockSize 
+        uint32_t numBlocks = (ip->size) / BlockSize;
         uint32_t result;
 
         for(uint32_t i = 0; i < numBlocks; i++) {
@@ -30,7 +30,7 @@ namespace sofs19
                     memset(ref[j].name, '\0', SOFS19_MAX_NAME + 1);
                     ref[j].in = NullReference;
                     soWriteFileBlock(pih, i, ref);
-                    return resutl;
+                    return result;
                 }
             }
         }
