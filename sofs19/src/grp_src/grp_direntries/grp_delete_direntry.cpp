@@ -15,8 +15,26 @@ namespace sofs19
     {
         soProbe(203, "%s(%d, %s)\n", __FUNCTION__, pih, name);
 
-        /* change the following line by your code */
-        return binDeleteDirEntry(pih, name);
+        //return binDeleteDirEntry(pih, name);
+        SOInode* ip = soGetInodePointer(pih);
+        SODirEntry ref[DPB];
+
+        uint32_t numBlocks = (ip->size) / BlockSize 
+        uint32_t result;
+
+        for(uint32_t i = 0; i < numBlocks; i++) {
+            soReadFileBlock(pih, i, ref);
+
+            for(uint32_t j = 0; j < DPB; j++) {
+                if(strcmp(ref[j].name, name) == 0) {
+                    memset(ref[j].name, '\0', SOFS19_MAX_NAME + 1);
+                    ref[j].in = NullReference;
+                    soWriteFileBlock(pih, i, ref);
+                    return resutl;
+                }
+            }
+        }
+        throw SOException(ENOENT, __FUNCTION__);
     }
 };
 
