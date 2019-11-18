@@ -41,7 +41,7 @@ namespace sofs19
                 }
 
                 if (blkID == 1){
-                    inode[0].mode = S_IFDIR | S_IREAD | S_IRWXG | S_IROTH | S_IXOTH;
+                    inode[0].mode = S_IFDIR | 0775;
                     inode[0].owner = getuid();
                     inode[0].group = getgid();
                     inode[0].size = BlockSize;
