@@ -30,7 +30,7 @@ namespace sofs19
         if((type != S_IFREG ) and (type != S_IFDIR) and (type != S_IFLNK))
             throw SOException(EINVAL, __FUNCTION__);
 
-        if ((perm | 0x777) != 0x777)
+        if ((perm | 0777) != 0777)
             throw SOException(EINVAL, __FUNCTION__);
         
         SOSuperBlock *sbp = soGetSuperBlockPointer();
@@ -62,6 +62,8 @@ namespace sofs19
         for(unsigned int i = 0; i< N_DOUBLE_INDIRECT; i++)
             ip->i2[i] = NullReference;
 
+        soSaveInode(ih);
+        soCloseInode(ih);
         return in;
     }
 };
